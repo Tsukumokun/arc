@@ -151,3 +151,12 @@ $RECYCLE.BIN/
 Session.vim
 .netrwhist
 *~
+
+
+### CMAKE
+
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
