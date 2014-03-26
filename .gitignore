@@ -37,7 +37,7 @@ __pycache__/
 .Python
 env/
 bin/
-build/
+*/build/
 develop-eggs/
 dist/
 eggs/
@@ -160,3 +160,4 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 install_manifest.txt
+
