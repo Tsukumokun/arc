@@ -104,6 +104,8 @@ src/
 .AppleDouble
 .LSOverride
 
+*.dSYM
+
 # Icon must ends with two \r.
 Icon
 
@@ -164,3 +166,8 @@ install_manifest.txt
 ### DOXYGEN
 
 doxygen/*/
+
+### TESTING
+
+tests/*.o
+
