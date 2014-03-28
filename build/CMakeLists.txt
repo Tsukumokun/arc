@@ -5,14 +5,10 @@ cmake_minimum_required(VERSION 2.6)
 set(LIB arc)
 
 # Notify cmake of include files
-set(INC
-    ../arc/pattern/observer.hxx
-)
+file(STRINGS "includes.txt" INC)
 
 # Notify cmake of the source files
-set(SRC
-    ../arc/pattern/observer.cxx
-)
+file(STRINGS "sources.txt" SRC)
 
 # Set compile flags
 set(CMAKE_CXX_FLAGS "-ggdb -Wall -std=c++0x")
