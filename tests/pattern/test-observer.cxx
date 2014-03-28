@@ -20,12 +20,14 @@
 
 #include <iostream>
 
+#include <boost/any.hpp>
+
 class ConcreteObserver : public arc::Observer
 {
-    void onNotify(arc::P_ObserverSubject sender,void *data)
+    void onNotify(arc::P_ObserverSubject sender,boost::any data)
     {
         std::cout << "Sender :" << sender << std::endl;
-        std::cout << "Data   :" << *static_cast<int *>(data) << std::endl;
+        std::cout << "Data   :" << boost::any_cast<int>(data) << std::endl;
     }
 };
 
@@ -40,8 +42,7 @@ int main()
 
     subject->attach(observer);
 
-    int a = 2;
-    subject->notify(&a);
+    subject->notify(2);
 
     return 0;
 }

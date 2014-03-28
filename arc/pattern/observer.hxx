@@ -24,6 +24,7 @@
 // External other library includes
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/any.hpp>
 
 namespace arc
 {
@@ -70,7 +71,7 @@ public:
      * @param sender Shared pointer to an observer subject.
      * @param data   Raw pointer to some data, unspecified type.
      */
-    virtual void onNotify(P_ObserverSubject sender, void *data) = 0;
+    virtual void onNotify(P_ObserverSubject sender, boost::any data) = 0;
 };
 
 //========== ObserverSubject ===================================================
@@ -81,7 +82,7 @@ private:
 public:
     void attach(P_Observer observer);
     void detach(P_Observer observer);
-    void notify(void *data);
+    void notify(boost::any data);
 };
 
 

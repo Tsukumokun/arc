@@ -44,7 +44,7 @@ void ObserverSubject::detach(P_Observer observer)
 
 
 //---------- ObserverSubject::notify() -----------------------------------------
-void ObserverSubject::notify(void *data)
+void ObserverSubject::notify(boost::any data)
 {
     for (std::list<P_Observer>::const_iterator iter = this->m_observers.begin();
          iter != this->m_observers.end(); iter++)
