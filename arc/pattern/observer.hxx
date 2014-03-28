@@ -78,10 +78,32 @@ public:
 class ObserverSubject : public boost::enable_shared_from_this<ObserverSubject>
 {
 private:
+
     std::list<P_Observer> m_observers; //!< List of observers
+
 public:
+
+    /**
+     * @brief Adds an observer to this subject.
+     *
+     * @param observer Shared pointer to the observer to add.
+     */
     void attach(P_Observer observer);
+
+    /**
+     * @brief Removes an observer from this subject.
+     *
+     * @param observer Shared pointer to the observer to remove.
+     */
     void detach(P_Observer observer);
+
+    /**
+     * @brief Sends a notification to the observers of this subject.
+     *
+     * This method will handle sending the data to all of the obsevers.
+     *
+     * @param data Anything that the observers should be expecting.
+     */
     void notify(boost::any data);
 };
 
