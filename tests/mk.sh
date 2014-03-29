@@ -35,5 +35,5 @@ echo_color()
 for file in $(find . -name '*.cxx');do
     obj=${file/.cxx/.o}
     echo_color $BLUE "Making $obj ..."
-    clang++ -std=c++0x -ggdb -pg -Wall -L../build -l arc -o $obj $file
+    clang++ -std=c++0x -ggdb -pg -Wall -L../build -larc -o $obj $file
 done

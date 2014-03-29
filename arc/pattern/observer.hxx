@@ -26,8 +26,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/any.hpp>
 
-namespace arc
-{
+namespace arc     {
+namespace pattern {
 
 /**
  * @class Observer
@@ -107,5 +107,5 @@ public:
     void notify(boost::any data);
 };
 
-
+}
 }

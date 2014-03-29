@@ -22,23 +22,25 @@
 
 #include <boost/any.hpp>
 
-class ConcreteObserver : public arc::Observer
+using namespace arc::pattern;
+
+class ConcreteObserver : public Observer
 {
-    void onNotify(arc::P_ObserverSubject sender,boost::any data)
+    void onNotify(P_ObserverSubject sender,boost::any data)
     {
         std::cout << "Sender :" << sender << std::endl;
         std::cout << "Data   :" << boost::any_cast<int>(data) << std::endl;
     }
 };
 
-class ConcreteSubject : public arc::ObserverSubject
+class ConcreteSubject : public ObserverSubject
 {
 };
 
 int main()
 {
-    arc::P_ObserverSubject subject(new ConcreteSubject());
-    arc::P_Observer observer(new ConcreteObserver());
+    P_ObserverSubject subject(new ConcreteSubject());
+    P_Observer observer(new ConcreteObserver());
 
     subject->attach(observer);
 

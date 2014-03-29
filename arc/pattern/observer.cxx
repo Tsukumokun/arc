@@ -25,8 +25,8 @@
 #include "observer.hxx"
 
 
-namespace arc
-{
+namespace arc     {
+namespace pattern {
 
 
 //---------- ObserverSubject::attach() -----------------------------------------
@@ -57,4 +57,5 @@ void ObserverSubject::notify(boost::any data)
 }
 
 
+}
 }
