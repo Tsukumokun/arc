@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Documentation script - will run all documentation files for
+# the given languages
+
+# Setup color output if possible
+if [ -t 1 ]; then
+
+    ncolors=$(tput colors)
+
+    if test -n "$ncolors" && test $ncolors -ge 8; then
+        BOLD="$(tput bold)"
+        UNDERLINE="$(tput smul)"
+        STANDOUT="$(tput smso)"
+        NORMAL="$(tput sgr0)"
+        BLACK="$(tput setaf 0)"
+        RED="$(tput setaf 1)"
+        GREEN="$(tput setaf 2)"
+        YELLOW="$(tput setaf 3)"
+        BLUE="$(tput setaf 4)"
+        MAGENTA="$(tput setaf 5)"
+        CYAN="$(tput setaf 6)"
+        WHITE="$(tput setaf 7)"
+    fi
+fi
+
+
+for lang in "$@"
+do
+    echo "${BLUE}Removing old documentation ...${NORMAL}"
+    rm -rf $lang/
+    echo "${BLUE}Creating documentation for $lang ...${NORMAL}"
+
+    doxygen doxygen.$lang 2>&1 | sed -e "
+    s/.*warning.*/${YELLOW}&/" | sed -e "
+    s/.*error.*/${RED}&/"
+
+done
+echo "${NORMAL}"
