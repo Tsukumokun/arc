@@ -1,1 +1,3 @@
 ../arc/pattern/observer.cxx
+
+../arc/trace/trace.cxx

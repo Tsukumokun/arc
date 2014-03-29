@@ -1,0 +1,35 @@
+
+################################################################################
+# TRACING
+################################################################################
+
+#===============================================================================
+# TRACE_LEVEL - specifies what to log in traces - not defined turns trace off
+# Options:
+#   TRACE_LEVEL_ERROR - ERROR messages
+#   TRACE_LEVEL_WARN  - WARN messages (and above)
+#   TRACE_LEVEL_INFO  - INFO messages (and above)
+#   TRACE_LEVEL_DEBUG - SYSTEM messages (and above)
+#   TRACE_LEVEL_NOTE  - NOTE,TODO,XXX messages (and above)
+#   TRACE_LEVEL_ALL   - same as TRACE_LEVEL_NOTE
+# Default:
+#   TRACE_LEVEL_ALL
+#===============================================================================
+
+TRACE_LEVEL=TRACE_LEVEL_ALL
+
+#===============================================================================
+# TRACE_FILENAME_LENGTH - length to trim or expand filename in logs
+# Default:
+#   25
+#===============================================================================
+
+TRACE_FILENAME_LENGTH=25
+
+#===============================================================================
+# TRACE_LINENUM_LENGTH - length to trim or expand line number in logs
+# Default:
+#   5
+#===============================================================================
+
+TRACE_LINENUM_LENGTH=5
