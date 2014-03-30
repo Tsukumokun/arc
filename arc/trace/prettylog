@@ -1,0 +1,244 @@
+#!/bin/sh
+
+# Parse arguments
+
+COLLAPSE=0
+
+# Setup color output if possible
+if [ -t 1 ]; then
+
+    ncolors=$(tput colors)
+
+    if test -n "$ncolors" && test $ncolors -ge 8; then
+        BOLD="$(tput bold)"
+        UNDERLINE="$(tput smul)"
+        STANDOUT="$(tput smso)"
+        NORMAL="$(tput sgr0)"
+        BLACK="$(tput setaf 0)"
+        RED="$(tput setaf 1)"
+        GREEN="$(tput setaf 2)"
+        YELLOW="$(tput setaf 3)"
+        BLUE="$(tput setaf 4)"
+        MAGENTA="$(tput setaf 5)"
+        CYAN="$(tput setaf 6)"
+        WHITE="$(tput setaf 7)"
+    fi
+fi
+
+T_XXX="${CYAN}&"
+T_TODO="${CYAN}&"
+T_NOTE="${WHITE}&"
+T_SYSTEM="${GREEN}&"
+T_INFO="${BLUE}&"
+T_WARN="${YELLOW}&"
+T_ERROR="${RED}&"
+T_SEVERE="${MAGENTA}&"
+
+T_ONLY=""
+
+while [ "$1" != "" ]; do
+    case $1 in
+    "-B" | "--bland" | "--no-color")
+        #IMPLEMENT
+        ;;
+    "-C" | "--collapse")
+        COLLAPSE=1
+        ;;
+    "-x" | "--xxx")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_XXX="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="xxx"
+            continue
+        fi
+        T_XXX="${!1}&"
+        ;;
+    "-X" | "--ignore-xxx")
+        T_XXX=""
+        ;;
+    "-t" | "--todo")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_TODO="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="todo"
+            continue
+        fi
+        T_TODO="${!1}&"
+        ;;
+    "-T" | "--ignore-todo")
+        T_TODO=""
+        ;;
+    "-n" | "--note")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_NOTE="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="note"
+            continue
+        fi
+        T_NOTE="${!1}&"
+        ;;
+    "-N" | "--ignore-note")
+        T_NOTE=""
+        ;;
+    "-s" | "--system")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_SYSTEM="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="system"
+            continue
+        fi
+        T_SYSTEM="${!1}&"
+        ;;
+    "-S" | "--ignore-system")
+        T_SYSTEM=""
+        ;;
+    "-i" | "--info")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_INFO="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="info"
+            continue
+        fi
+        T_INFO="${!1}&"
+        ;;
+    "-I" | "--ignore-info")
+        T_INFO=""
+        ;;
+    "-w" | "--warn")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_WARN="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="warn"
+            continue
+        fi
+        T_WARN="${!1}&"
+        ;;
+    "-W" | "--ignore-warn")
+        T_WARN=""
+        ;;
+    "-e" | "--error")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_ERROR="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="error"
+            continue
+        fi
+        T_ERROR="${!1}&"
+        ;;
+    "--ss" | "--severe")
+        shift
+        if [[ "$1" == -* ]]
+        then
+            T_SEVERE="${NORMAL}&"
+            continue
+        fi
+        if [[ "$1" == "" ]]
+        then
+            T_ONLY="severe"
+            continue
+        fi
+        T_SEVERE="${!1}&"
+        ;;
+    esac
+    shift
+done
+
+
+if [[ $T_ONLY != "" ]]
+then
+    if [[ $T_ONLY != "xxx" ]]
+    then
+        T_XXX=""
+    fi
+    if [[ $T_ONLY != "todo" ]]
+    then
+        T_TODO=""
+    fi
+    if [[ $T_ONLY != "note" ]]
+    then
+        T_NOTE=""
+    fi
+    if [[ $T_ONLY != "system" ]]
+    then
+        T_SYSTEM=""
+    fi
+    if [[ $T_ONLY != "info" ]]
+    then
+        T_INFO=""
+    fi
+    if [[ $T_ONLY != "warn" ]]
+    then
+        T_WARN=""
+    fi
+    if [[ $T_ONLY != "error" ]]
+    then
+        T_ERROR=""
+    fi
+    if [[ $T_ONLY != "severe" ]]
+    then
+        T_SEVERE=""
+    fi
+fi
+
+if [ $COLLAPSE = 0 ]
+then
+    while read LINE; do
+        echo "$LINE" | sed -e "
+        s/.*> - \[XXX   \].*/${T_XXX}/"    -e "
+        s/.*> - \[TODO  \].*/${T_TODO}/"   -e "
+        s/.*> - \[NOTE  \].*/${T_NOTE}/"   -e "
+        s/.*> - \[SYSTEM\].*/${T_SYSTEM}/" -e "
+        s/.*> - \[INFO  \].*/${T_INFO}/"   -e "
+        s/.*> - \[WARN  \].*/${T_WARN}/"   -e "
+        s/.*> - \[ERROR \].*/${T_ERROR}/"  -e "
+        s/.*> - \[SEVERE\].*/${T_SEVERE}/" | grep --colour=never .
+    done
+else
+    while read LINE; do
+        echo $LINE | sed -e "
+        s/.*> - \[XXX \].*/${T_XXX}/"      -e "
+        s/.*> - \[TODO \].*/${T_TODO}/"    -e "
+        s/.*> - \[NOTE \].*/${T_NOTE}/"    -e "
+        s/.*> - \[SYSTEM\].*/${T_SYSTEM}/" -e "
+        s/.*> - \[INFO \].*/${T_INFO}/"    -e "
+        s/.*> - \[WARN \].*/${T_WARN}/"    -e "
+        s/.*> - \[ERROR \].*/${T_ERROR}/"  -e "
+        s/.*> - \[SEVERE\].*/${T_SEVERE}/" | grep --colour=never .
+    done
+fi
+echo "${NORMAL}"

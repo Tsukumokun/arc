@@ -6,7 +6,7 @@
 #===============================================================================
 # TRACE_LEVEL - specifies what to log in traces - not defined turns trace off
 # Options:
-#   TRACE_LEVEL_ERROR - ERROR messages
+#   TRACE_LEVEL_ERROR - ERROR,SEVERE messages
 #   TRACE_LEVEL_WARN  - WARN messages (and above)
 #   TRACE_LEVEL_INFO  - INFO messages (and above)
 #   TRACE_LEVEL_DEBUG - SYSTEM messages (and above)
